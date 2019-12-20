@@ -30,4 +30,17 @@ describe('app routes', () => {
         });
       });
   });
+  it('can login a user', async () => {
+    const user = await User.create({ email: 'eve@evie.com', password: 'Puppies' });
+    return request(app)
+      .post('/api/v1/auth/login')
+      .send({ email: 'eve@evie.com', password: 'Puppies' })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: user.id,
+          email: 'eve@evie.com',
+          __v: 0
+        });
+      });
+  });
 });
